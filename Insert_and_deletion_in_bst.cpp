@@ -1,5 +1,4 @@
-// 
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 class Node{
@@ -81,6 +80,38 @@ void inorder(Node* root){
     inorder(root->right);
 }
 
+void bfs(Node* root){
+    if(root==NULL){
+        return;
+    }
+    queue <Node* > q;
+    q.push(root);
+    q.push(NULL);
+    int level=1;
+    cout<<"nodes on level "<<level<<endl;
+    while(!q.empty()){
+        Node* curr=q.front();
+        q.pop();
+        cout<<curr->data<<"  ";
+        if(curr->left){
+            q.push(curr->left);
+        }
+        if(curr->right){
+            q.push(curr->right);
+        }
+
+        if(q.front()==NULL){
+            q.pop();
+            if(!q.empty()){
+                q.push(NULL);
+                level++;
+                cout<<"\n nodes on level "<<level<<endl;
+
+            }
+        }
+
+    }
+}
 int main(){
     Node* root=NULL;
     root=insert(root,25);
@@ -91,7 +122,8 @@ int main(){
     insert(root,10);
     inorder(root);
     cout<<"\n";
-    delete_node(root,10);
-    inorder(root);
+  //  delete_node(root,25);
+   // inorder(root);
+   bfs(root);
     return 0;
 }
