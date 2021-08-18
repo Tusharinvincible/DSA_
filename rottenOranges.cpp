@@ -24,7 +24,7 @@ int minTimeToRottenOranges(vector <vector<int>> mat){
     int rottenI=-1;
     int rottenJ=-1;
     queue <point> q;
-    vector <vector <bool>> isInc(row,vector<bool> (false,col));
+    vector <vector <bool>> isInc(row,vector<bool> (col,false));
       
     for(int i=0;i<row;i++){
         for(int j=0;j<col;j++){
