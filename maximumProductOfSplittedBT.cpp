@@ -39,4 +39,8 @@ int main(){
 
     return 0;
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4bdac3835afd50cc30c511c344af5f6a29e7090f

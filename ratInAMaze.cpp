@@ -1,52 +1,60 @@
-#include <bits/stdc++.h>
+ #include <bits/stdc++.h>
 
-using namespace std;
+ using namespace std;
+ bool isPossible(int i, int j, vector < vector < int >> & m, int n, vector < vector < bool >> & isIncluded) {
+     if (i < n && i >= 0 && j >= 0 && j < n && m[i][j] == 1 && isIncluded[i][j] == false) {
+         return true;
+     }
+     return false;
+ }
+ void recPath(vector < vector < int >> & m, int i, int j, int n, vector < string > & ans, string & st, vector < vector < bool >> & isIncluded) {
+     if (i == n - 1 && j == n - 1) {
+         ans.push_back(st);
+         return;
+     }
+     if (isPossible(i + 1, j, m, n, isIncluded)) {
+         st += 'D';
+         isIncluded[i + 1][j] = true;
+         recPath(m, i + 1, j, n, ans, st, isIncluded);
+         st.pop_back();
+         isIncluded[i + 1][j] = false;
 
-bool isPossible(vector < vector < int >> & maze, int i, int j) {
-    if (i >= 0 && i < maze.size() && j >= 0 && j < maze[0].size() && maze[i][j] == 1) {
+     }
+     if (isPossible(i, j - 1, m, n, isIncluded)) {
+         st += 'L';
+         isIncluded[i][j - 1] = true;
+         recPath(m, i, j - 1, n, ans, st, isIncluded);
+         st.pop_back();
+         isIncluded[i][j - 1] = false;
+     }
+     if (isPossible(i, j + 1, m, n, isIncluded)) {
+         st += 'R';
+         isIncluded[i][j + 1] = true;
+         recPath(m, i, j + 1, n, ans, st, isIncluded);
+         st.pop_back();
+         isIncluded[i][j + 1] = false;
+     }
+     if (isPossible(i - 1, j, m, n, isIncluded)) {
+         st += 'U';
+         isIncluded[i - 1][j] = true;
+         recPath(m, i - 1, j, n, ans, st, isIncluded);
+         st.pop_back();
+         isIncluded[i - 1][j] = false;
+     }
 
-        return true;
+     return;
+ }
+ vector < string > findPath(vector < vector < int >> & m, int n) {
+     // Your code goes here
+     int i = 0;
+     int j = 0;
+     vector < string > ans;
+     string st = "";
+     vector < vector < bool >> isIncluded(n, vector < bool > (n, false));
+     if (m[0][0] == 1) {
+         isIncluded[0][0] = true;
+         recPath(m, i, j, n, ans, st, isIncluded);
+     }
+     return ans;
 
-    }
-
-    return false;
-}
-
-bool isReachable(vector < vector < int >> & maze, int i, int j) {
-    if (i == (maze.size() - 1) && j == (maze[0].size() - 1) && maze[i][j] == 1) {
-        return true;
-    }
-
-    if (isPossible(maze, i, j)) {
-        if (isReachable(maze, i + 1, j)) {
-            return true;
-        } else if (isReachable(maze, i, j + 1)) {
-            return true;
-        }
-    }
-
-    return false;
-
-
-}
-
-int main() {
-    int row, col;
-    cout << "Enter the Row and Col:  ";
-    cin >> row >> col;
-
-    vector < vector < int > > maze(row, vector < int > (col, 0));
-    for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; j++) {
-            cin >> maze[i][j];
-        }
-    }
-
-    if (isReachable(maze, 0, 0)) {
-        cout << "Yes it is Possible: " << endl;
-    } else {
-        cout << "No its not Possible:   " << endl;
-    }
-
-    return 0;
-}
+ }
