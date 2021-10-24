@@ -1,0 +1,54 @@
+/*There are several cards arranged in a row, and each card has an associated number of points. The points are given in the integer array cardPoints.
+
+In one step, you can take one card from the beginning or from the end of the row. You have to take exactly k cards.
+
+Your score is the sum of the points of the cards you have taken.
+
+Given the integer array cardPoints and the integer k, return the maximum score you can obtain.
+
+*/
+
+
+// vector <vector <int>> dp(10005,vector <int> (10005,0));
+
+
+class Solution {
+public:
+    //     int maximumScore( vector <int> &cardPoints,int i,int j,int k){
+//         if(dp[i][j]!=0){
+//             return dp[i][j];
+//         }
+//         if(k==0){
+//             dp[i][j]=0;
+//             return dp[i][j];
+            
+//         }
+//         if(i==j){
+//             dp[i][j]=cardPoints[i];
+//             return dp[i][j];
+//         }
+        
+//         dp[i][j]=max((cardPoints[i]+maximumScore(cardPoints,i+1,j,k-1)),(cardPoints[j]+maximumScore(cardPoints,i,j-1,k-1)));
+        
+//         return dp[i][j];
+//     }
+    int maxScore(vector<int>& nums, int k) {
+        int i=0;
+        int j=nums.size()-1;
+        // maximumScore(cardPoints,i,j,k);
+        // return dp[i][j];
+        int sum=0;
+        for(int i=0;i<k;i++){
+            sum+=nums[i];
+        }
+        int maxi=sum;
+        while(k>0){
+            sum=sum-nums[k-1]+nums[j];
+            maxi=max(sum,maxi);
+            k--;
+            j--;
+        }
+        return maxi;
+        
+    }
+};
